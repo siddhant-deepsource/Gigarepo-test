@@ -8,13 +8,14 @@
 a = { 'hello' => 'world', 'testing' => BigDecimal('123.456', 3) }
 
 # Raises "`while`/`until` detected in `begin` block"
-begin
+loop do
   do_something
-end while a == b
+  break unless a == b
+end
 
 # Raises "multiple comparison detected"
 x < y && y < z
-10 <= x && x <= 20
+x >= 10 && x <= 20
 
 # Raises "empty rescue block detected"
 begin
@@ -62,11 +63,11 @@ def foo
 end
 
 # Raises "Use `Range#cover?` instead of `Range#include?`"
-(1..9).include?(5)
+(1..9).cover?(5)
 
 my_hash = {}
 # Raises "Hash merging can be replaced by hash key assignment"
-my_hash.merge!(key: value)
+my_hash[:key] = value
 
 # Raises "Use `size` instead of `count`"
 [1, 2, 3].size
